@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": [2, "never"],    
+    "func-style": [2, "declaration"],
+    "max-len": [2, {"code": 100, "ignoreTrailingComments": true, "ignoreUrls": true}],
+    "no-param-reassign": 1,
+    "no-trailing-spaces": [2, { "skipBlankLines": true }],
+    "no-unneeded-ternary": [2, {"defaultAssignment": true }],
+    "no-use-before-define": [2, "nofunc"],
+    "padded-blocks": [0, "never"],
+    "quote-props": [2, "consistent-as-needed"],
+    "no-unused-vars": [2, { "vars": "local", "args": "none" }],
+    "space-before-function-paren": [2, {"anonymous": "never", "named": "never"}],
+    "arrow-body-style": [2, "always"]
+  }
+}
