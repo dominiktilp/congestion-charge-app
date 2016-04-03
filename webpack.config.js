@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
+export default {
 
-  devtool: '#inline-source-map',
+  devtool: 'source-map',
 
   entry: [
     'webpack-hot-middleware/client',

@@ -1,38 +1,43 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
-import VehicleForm from '../components/VehicleForm.jsx';
+import PaymentForm from '../components/PaymentForm.js';
 import * as AppActions from '../actions/appActions.js';
 
-class SetVehicle extends React.Component {
+class Payment extends React.Component {
   
-  vechicleFormOnSubmit(vehicleId) {
-    console.log('setVehicleId', vehicleId);
-    this.props.actions.setVehicleId(vehicleId);
-  }
   render() {
+    
+    const errorMessage = this.props.state.getIn(['app', 'errorMessage']);
+    
     return (
       <div>
-        <h1> Fill the vehicle ID</h1>
-        <VehicleForm onSubmit={this.vechicleFormOnSubmit.bind(this)} />
-        <Link to="/">Home</Link>
+        <h1>Set the vehicle ID</h1>
+        
+        <h3>{errorMessage}</h3>
+        
+        <PaymentForm onSubmit={this.props.actions.setPayment} state={this.props.state} />
       </div>
     );
   }
+  
 }
 
-SetVehicle.propTypes = {
-  children: PropTypes.element,
+Payment.propTypes = {
   actions: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired
 };
 
+Payment.needs = [
+  AppActions.setVehicleId,
+  AppActions.selectDay
+];
+
 function mapStateToProps(state) {
-  return {
-    state
-  };
+  return { state }
+  ;
 }
 
 function mapDispatchToProps(dispatch) {
@@ -41,8 +46,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SetVehicle);
+)(Payment);

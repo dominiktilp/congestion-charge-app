@@ -16,8 +16,4 @@ App.propTypes = {
   main: PropTypes.element
 };
 
-App.contextTypes = {
-  store: PropTypes.object.isRequired
-};
-
 export default App;

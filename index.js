@@ -6,6 +6,8 @@ import configureStore from './utils/configureStore';
 import routes from './routes/routing';
 import Immutable from 'immutable';
 
+import 'isomorphic-fetch';
+
 let state = null;
 if (window.$REDUX_STATE) {
 

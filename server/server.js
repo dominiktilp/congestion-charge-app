@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -6,29 +6,39 @@ import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import routes from '../routes/routing';
 
-import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 
-import combinedReducers from '../reducers';
+import configureStore from '../utils/configureStore';
 
 import fetchComponentData from '../utils/fetchComponentData';
 
+import api from './api';
 
-const app = express();
+import 'isomorphic-fetch';
+import bodyParser from 'body-parser';
+
+
 
 // initialize webpack HMR
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('../webpack.config');
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import config from '../webpack.config';
+
 const compiler = webpack(config);
+const app = express();
+
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler));
+
+app.use('/api', bodyParser.json());
+
+app.use('/api', api);
 
 // server rendering
 app.use((req, res, next) => {
 
-  const store = createStore(combinedReducers);
+  const store = configureStore();
 
   // react-router
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -42,19 +52,9 @@ app.use((req, res, next) => {
     }
 
     if (renderProps === null) {
-      // return next('err msg: route not found'); // yield control to next middleware to handle the request
       return res.status(404).send('Not found');
     }
-
-    // console.log( '\nserver > renderProps: \n', require('util').inspect( renderProps, false, 1, true) )
-    // console.log( '\nserver > renderProps: \n', require('util').inspect( renderProps.components, false, 3, true) )
-
-    // this is where universal rendering happens,
-    // fetchComponentData() will trigger actions listed in static "needs" props in each container component
-    // and wait for all of them to complete before continuing rendering the page,
-    // hence ensuring all data needed was fetched before proceeding
-    //
-    // renderProps: contains all necessary data, e.g: routes, router, history, components...
+    
     return fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
       .then(() => {
 
@@ -64,13 +64,9 @@ app.use((req, res, next) => {
           </Provider>
         ));
 
-        // console.log('\ninitView:\n', initView);
-
         const state = JSON.stringify(store.getState());
-        // console.log( '\nstate: ', state )
 
         const page = renderFullPage(initView, state);
-        // console.log( '\npage:\n', page );
 
         return page;
 
