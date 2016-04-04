@@ -1,6 +1,9 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
+import BackNextBar from './BackNextBar.js';
+import DaySlot from './DaySlot.js';
+
 class SelectDayForm extends React.Component {
   
   constructor(props) {
@@ -15,7 +18,7 @@ class SelectDayForm extends React.Component {
   next(event) {
     event.preventDefault();
     
-    if (this.data.selectedDay === undefined) {
+    if (this.data.selectedDay === null || this.data.selectedDay === undefined) {
       return;
     }
     
@@ -38,26 +41,19 @@ class SelectDayForm extends React.Component {
   render() {
     return (
       <form className="VehicleForm" onSubmit={this.next} ref="selectedDay">
-        <input type="radio"
-          name="selectedDay"
-          onChange={this.changeSelectedvalue}
-          value="yesterday"
-          defaultChecked={this.data.selectedDay === 'yesterday'}
-        />Yesterday
-        <input type="radio"
-          name="selectedDay"
-          onChange={this.changeSelectedvalue}
-          value="today"
-          defaultChecked={this.data.selectedDay === 'today'}
-        />Today
-        <input type="radio"
-          name="selectedDay"
-          onChange={this.changeSelectedvalue}
-          value="tomorrow"
-          defaultChecked={this.data.selectedDay === 'tomorrow'}
-        />Tomorrow
-        <br />
-        <a href="#" onClick={this.back}>Back</a> | <a href="#" onClick={this.next}>Next</a>
+        {Array.from(this.props.state.getIn(['app', 'vehicle', 'daySlots']).keys()).map((key) => {
+          let slot = this.props.state.getIn(['app', 'vehicle', 'daySlots', key]);          
+          return (
+            <DaySlot
+              onChange={this.changeSelectedvalue}
+              value={key}
+              key={key}
+              actualValue={this.data.selectedDay || null}
+              text={`${key} - £${slot.get('price')}`}
+            />
+          );
+        })}
+        <BackNextBar next={this.next} back={this.back} />
       </form>
     );
   }

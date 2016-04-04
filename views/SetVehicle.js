@@ -11,7 +11,7 @@ class SetVehicle extends React.Component {
   render() {
     return (
       <div>
-        <h1>Set the vehicle ID</h1>
+        <h2>Set the vehicle ID</h2>
         <VehicleForm onSubmit={this.props.actions.setVehicleId} state={this.props.state} />
       </div>
     );
@@ -31,6 +31,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     actions: bindActionCreators(AppActions, dispatch)
   };
 }

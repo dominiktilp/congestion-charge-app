@@ -8,6 +8,8 @@ import Immutable from 'immutable';
 
 import 'isomorphic-fetch';
 
+require('./styles.styl');
+
 let state = null;
 if (window.$REDUX_STATE) {
 
@@ -23,5 +25,5 @@ render(
 	<Provider store={store}>
 		<Router history={browserHistory} routes={routes} />
 	</Provider>,
-	document.querySelector('.container')
+	document.querySelector('#app')
 );

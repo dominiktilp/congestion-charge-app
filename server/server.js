@@ -89,7 +89,7 @@ function renderFullPage(html, initialState) {
         <title>Universal Redux Example</title>
       </head>
       <body>
-      <div class="container">${html}</div>
+      <div id="app" class="container">${html}</div>
     <script>window.$REDUX_STATE = ${initialState}</script>
     <script src="/static/bundle.js"></script>
       </body>

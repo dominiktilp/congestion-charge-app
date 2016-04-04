@@ -1,5 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import BackNextBar from './BackNextBar.js';
 
 class PaymentForm extends React.Component {
   
@@ -17,6 +18,7 @@ class PaymentForm extends React.Component {
     event.preventDefault();
     
     if (this.data.cardType === undefined
+      || this.data.cardType === null
       || this.refs.cardNumber.value === ''
       || this.refs.cardExpire.value === ''
       || this.refs.cardSecurityCode.value === '') {
@@ -49,7 +51,7 @@ class PaymentForm extends React.Component {
   
   render() {
     return (
-      <form className="VehicleForm" onSubmit={this.next} ref="card">
+      <form className="VehicleForm" onSubmit={this.next} ref="card">      
         <input type="radio"
           name="cardType"
           onChange={this.changeSelectedType}
@@ -86,8 +88,8 @@ class PaymentForm extends React.Component {
           ref="cardSecurityCode"
           name="card.securityCode"
           defaultValue={this.props.state.get('app').get('cardSecurityCode')}
-        /><br />
-        <a href="#" onClick={this.back}>Back</a> | <a href="#" onClick={this.next}>Next</a>
+        /><br />  
+        <BackNextBar next={this.next} back={this.back} />
       </form>
     );
   }

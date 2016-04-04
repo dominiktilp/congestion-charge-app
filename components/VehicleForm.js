@@ -6,14 +6,25 @@ class VehicleForm extends React.Component {
   constructor(props) {
     super(props);
     this.next = this.next.bind(this);
+    this.validate = this.validate.bind(this);
+  }
+  
+  validate() {
+    if (this.refs.vehicleId.value === '') {
+      return false;
+    }
+    return true;
   }
         
   next(event) {
     event.preventDefault();
-    const vehicleId = this.refs.vehicleId.value;
-    if (vehicleId === '') {
+    
+    if (!this.validate()) {
       return;
     }
+    
+    let vehicleId = this.refs.vehicleId.value;
+    
     this.props.onSubmit({ vehicleId });
     browserHistory.push(`/vehicle/${vehicleId}/day`);
   }
@@ -26,7 +37,7 @@ class VehicleForm extends React.Component {
           name="vehicle.id"
           defaultValue={this.props.state.get('app').get('vehicleId')}
         /><br />
-        <a href="#" onClick={this.next}>Set vehicle id</a>
+        <a href="#" onClick={this.next} className="button active">Set vehicle id</a>
       </form>
     );
   }

@@ -36,7 +36,7 @@ router.get('/vehicle/:vehicleId', (req, res) => {
   res.json(data);
 });
 
-// define the about route
+// create a payment
 router.post('/vehicle/:vehicleId/payment', (req, res) => {
   
   let data = {

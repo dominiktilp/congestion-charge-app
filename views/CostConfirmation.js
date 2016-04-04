@@ -5,12 +5,20 @@ import { browserHistory } from 'react-router';
 
 import * as AppActions from '../actions/appActions.js';
 
+import BackNextBar from '../components/BackNextBar.js';
+
 class CostConfirmation extends React.Component {
   
   constructor(props) {
     super(props);
     this.back = this.back.bind(this);
     this.next = this.next.bind(this);
+    
+    this.needs = [
+      AppActions.setVehicleId,
+      AppActions.loadVehicleInfo,
+      AppActions.selectDay
+    ]; 
   }
   
   back(event) {
@@ -37,7 +45,7 @@ class CostConfirmation extends React.Component {
       <div>
         <h1>{vehicleId} cost for {day}</h1>
         <h2>£{dayInfo.price}</h2>
-        <a href="#" onClick={this.back} >Back</a> | <a href="#" onClick={this.next} >Next</a>
+        <BackNextBar next={this.next} back={this.back} />          
       </div>
     );
   }
@@ -62,6 +70,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     actions: bindActionCreators(AppActions, dispatch)
   };
 }

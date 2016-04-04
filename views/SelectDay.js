@@ -8,15 +8,24 @@ import * as AppActions from '../actions/appActions.js';
 
 class SelectDay extends React.Component {
   
-  componentDidMount() {
-    
+  constructor(params) {
+    super(params);
+    this.needs = [
+      AppActions.setVehicleId
+    ];
   }
   
   render() {
     return (
       <div>
-        <h1>Select the day</h1>
-        <SelectDayForm onSubmit={this.props.actions.selectDay} state={this.props.state} />
+        <h2>Select the day</h2>
+        {(() => {
+          if (this.props.state.getIn(['app', 'loading'])) {
+            return <div>... loading ...</div>;
+          }
+          return <SelectDayForm onSubmit={this.props.actions.selectDay} state={this.props.state} />;
+          
+        })()}
       </div>
     );
   }
@@ -38,6 +47,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     actions: bindActionCreators(AppActions, dispatch)
   };
 }

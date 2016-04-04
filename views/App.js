@@ -3,10 +3,13 @@ import React, { PropTypes } from 'react';
 function App(props) {
   
   return (
-    <div>
-      App
-      Main:
-      {props.main}
+    <div className="container">
+      <div id="top-bar">
+        <h1>Congestion Charge</h1>
+      </div>
+      <div className="body">
+        {props.main}
+      </div>
     </div>
   );
 

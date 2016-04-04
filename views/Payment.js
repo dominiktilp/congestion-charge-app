@@ -6,7 +6,24 @@ import { browserHistory } from 'react-router';
 import PaymentForm from '../components/PaymentForm.js';
 import * as AppActions from '../actions/appActions.js';
 
+import { fetchNeeds } from '../utils/fetchComponentData';
+
 class Payment extends React.Component {
+  
+  constructor(params) {
+    super(params);
+    this.needs = [
+      AppActions.setVehicleId,
+      AppActions.selectDay
+    ];
+  }
+  
+  componentDidMount() {
+		// check if product already existed to avoid unnecessary fetching
+    if (!this.props.state.getIn(['app', 'vehicleId']) && !this.props.state.getIn(['app', 'selectedDay'])) {      
+      fetchNeeds(this.needs, this.props);
+    }
+  }
   
   render() {
     
@@ -14,7 +31,7 @@ class Payment extends React.Component {
     
     return (
       <div>
-        <h1>Set the vehicle ID</h1>
+        <h2>Set the vehicle ID</h2>
         
         <h3>{errorMessage}</h3>
         
@@ -42,6 +59,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch,
     actions: bindActionCreators(AppActions, dispatch)
   };
 }
