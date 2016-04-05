@@ -8,14 +8,16 @@ import * as AppActions from '../actions/appActions.js';
 
 import { fetchNeeds } from '../utils/fetchComponentData';
 
+const needs = [
+  AppActions.setVehicleId,
+  AppActions.selectDay
+];
+
 class Payment extends React.Component {
   
   constructor(params) {
     super(params);
-    this.needs = [
-      AppActions.setVehicleId,
-      AppActions.selectDay
-    ];
+    this.needs = needs;
   }
   
   componentDidMount() {
@@ -47,10 +49,7 @@ Payment.propTypes = {
   state: PropTypes.object.isRequired
 };
 
-Payment.needs = [
-  AppActions.setVehicleId,
-  AppActions.selectDay
-];
+Payment.needs = needs;
 
 function mapStateToProps(state) {
   return { state }

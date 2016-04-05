@@ -7,6 +7,12 @@ import * as AppActions from '../actions/appActions.js';
 
 import BackNextBar from '../components/BackNextBar.js';
 
+const needs = [
+  AppActions.setVehicleId,
+  AppActions.loadVehicleInfo,
+  AppActions.selectDay
+];
+
 class CostConfirmation extends React.Component {
   
   constructor(props) {
@@ -14,11 +20,7 @@ class CostConfirmation extends React.Component {
     this.back = this.back.bind(this);
     this.next = this.next.bind(this);
     
-    this.needs = [
-      AppActions.setVehicleId,
-      AppActions.loadVehicleInfo,
-      AppActions.selectDay
-    ]; 
+    this.needs = needs; 
   }
   
   back(event) {
@@ -57,11 +59,7 @@ CostConfirmation.propTypes = {
   state: PropTypes.object.isRequired
 };
 
-CostConfirmation.needs = [
-  AppActions.setVehicleId,
-  AppActions.loadVehicleInfo,
-  AppActions.selectDay
-];
+CostConfirmation.needs = needs;
 
 function mapStateToProps(state) {
   return { state }

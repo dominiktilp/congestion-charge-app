@@ -6,13 +6,15 @@ import { Link } from 'react-router';
 import SelectDayForm from '../components/SelectDayForm.js';
 import * as AppActions from '../actions/appActions.js';
 
+const needs = [
+  AppActions.setVehicleId
+];
+
 class SelectDay extends React.Component {
   
   constructor(params) {
     super(params);
-    this.needs = [
-      AppActions.setVehicleId
-    ];
+    this.needs = needs;
   }
   
   render() {
@@ -37,9 +39,7 @@ SelectDay.propTypes = {
   state: PropTypes.object.isRequired
 };
 
-SelectDay.needs = [
-  AppActions.setVehicleId
-];
+SelectDay.needs = needs;
 
 function mapStateToProps(state) {
   return { state };
