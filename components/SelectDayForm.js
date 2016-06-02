@@ -41,6 +41,7 @@ class SelectDayForm extends React.Component {
   render() {
     return (
       <form className="VehicleForm" onSubmit={this.next} ref="selectedDay">
+        
         {Array.from(this.props.state.getIn(['app', 'vehicle', 'daySlots']).keys()).map((key) => {
           let slot = this.props.state.getIn(['app', 'vehicle', 'daySlots', key]);          
           return (

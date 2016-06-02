@@ -20,7 +20,7 @@ class CostConfirmation extends React.Component {
     this.back = this.back.bind(this);
     this.next = this.next.bind(this);
     
-    this.needs = needs; 
+    this.needs = needs;
   }
   
   back(event) {

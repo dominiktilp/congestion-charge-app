@@ -5,7 +5,7 @@ class DaySlot extends React.Component {
   
   render() {
     return (
-      <div className="input-line">
+      <div className="input-line">        
         <input type="radio"
           name="daySlot"
           onChange={this.props.onChange}
